@@ -1,26 +1,33 @@
-package com.oreilly.demo.json;
+package com.oreilly.demo.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 import org.springframework.stereotype.Component;
 
-import javax.persistence.Entity;
 
-
-public class Site {
+@Entity
+public class SiteEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String address;
     private double latitude;
     private double longitude;
 
-    public Site() {
+    public SiteEntity() {
     }
 
-    public Site(String formattedAddress, double latitude, double longitude) {
+    public SiteEntity(String formattedAddress, double latitude, double longitude) {
         this.address = formattedAddress;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Site(String formattedAddress) {
+    public SiteEntity(String formattedAddress) {
         this.address = formattedAddress;
         this.latitude = 0;
         this.longitude = 0;
@@ -48,7 +55,7 @@ public class Site {
 
     @Override
     public String toString() {
-        return "Site{" +
+        return "SiteEntity{" +
                 "id=" + id +
                 ", address='" + address + '\'' +
                 ", latitude=" + latitude +

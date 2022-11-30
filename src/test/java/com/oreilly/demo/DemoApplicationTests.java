@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
+import java.util.logging.Logger;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,16 +21,19 @@ class DemoApplicationTests {
     @Autowired
     ApplicationContext context;
 
+    @Autowired
+    Logger log;
+
     @Test
     void contextLoads() {
         assertNotNull(context);
 //        log.info(context.getClass().getName());
-        System.out.println("context: [" + context.getClass().getName() + "]");
+        log.info("context: [" + context.getClass().getName() + "]");
         int count = context.getBeanDefinitionCount();
-        System.out.println("there are [" + count + "] beans in the applicationContext.");
+        log.info("there are [" + count + "] beans in the applicationContext.");
         Arrays.stream(context.getBeanDefinitionNames()).forEach(
 //                name->{
-//           System.out.println("name: ["+name+"]");
+//           log.info("name: ["+name+"]");
 //        });
                 System.out::println);
     }
@@ -52,7 +56,7 @@ class DemoApplicationTests {
 
 //        greeting1.setMessage("what up");
 
-        System.out.println("greeting2.getMessage(): [" + greeting2.getMessage() + "]");
+        log.info("greeting2.getMessage(): [" + greeting2.getMessage() + "]");
 
         assertNotSame(greeting1, greeting2);
     }

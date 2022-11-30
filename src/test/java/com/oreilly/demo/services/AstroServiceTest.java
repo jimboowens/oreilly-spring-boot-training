@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,11 +16,14 @@ public class AstroServiceTest {
     @Autowired
     private AstroService service;
 
+    @Autowired
+    Logger log;
+
     @Test
     void getAstronautsRT() {
         AstroResult result = service.getAstronautsRT();
         int number = result.getNumber();
-        System.out.println("there are [" + number + "] astronauts in space");
+        log.info("there are [" + number + "] astronauts in space");
         List<Assignment> people = result.getPeople();
         people.forEach(System.out::println);
         assertAll(
@@ -31,7 +35,7 @@ public class AstroServiceTest {
     void getAstronautsWC() {
         AstroResult result = service.getAstronautsWC();
         int number = result.getNumber();
-        System.out.println("there are [" + number + "] astronauts in space");
+        log.info("there are [" + number + "] astronauts in space");
         List<Assignment> people = result.getPeople();
         people.forEach(System.out::println);
         assertAll(
