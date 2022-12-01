@@ -20,10 +20,12 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-devtools'
     // Comment if not in Apple Silicon
     implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
+    testImplementation ('org.springframework.boot:spring-boot-starter-test'){
+        exclude module: 'junit'
+    }
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
+    testImplementation ('io.projectreactor:reactor-test')
     runtimeOnly 'com.h2database:h2'
-
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'io.projectreactor:reactor-test'
 }
 
 test {

@@ -2,6 +2,8 @@ package com.oreilly.demo.services;
 
 import com.oreilly.demo.dao.SiteRepository;
 import com.oreilly.demo.entity.SiteEntity;
+import com.oreilly.demo.config.AppProperties;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,14 +15,16 @@ import java.util.logging.Logger;
 @Service
 @Transactional
 public class SiteService {
+
     private SiteRepository repository;
+
     private GeocoderService geocoderService;
 
     @Autowired
     Logger log;
 
     @Autowired
-    public void SiteService(SiteRepository repository, GeocoderService geocoderService) {
+    public SiteService(SiteRepository repository, GeocoderService geocoderService) {
         this.repository = repository;
         this.geocoderService = geocoderService;
     }
@@ -40,7 +44,7 @@ public class SiteService {
         ).forEach(site -> log.info("site: [" + site + "]"));
     }
 
-    public List<SiteEntity> getAllSites(){
+    public List<SiteEntity> getAllSites() {
         return repository.findAll();
     }
 
@@ -49,7 +53,6 @@ public class SiteService {
     }
 
     public SiteEntity saveSite(String address) {
-        SiteEntity site= new SiteEntity(address);
-        return repository.save(site);
+        return repository.save(new SiteEntity(address));
     }
 }

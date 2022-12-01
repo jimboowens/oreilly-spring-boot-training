@@ -5,8 +5,8 @@ import org.springframework.beans.factory.InjectionPoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Scope;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import java.util.logging.Logger;
 
@@ -14,13 +14,18 @@ import java.util.logging.Logger;
 public class AppConfig {
 
     @Bean
-    public Greeting defaultGreeting(){
+    public Greeting defaultGreeting() {
         return new Greeting("Hello World");
     }
-    @Bean
-    public Greeting whatUpGreeting(){
 
+    @Bean
+    public Greeting whatUpGreeting() {
         return new Greeting("What up?");
+    }
+
+    @Bean
+    public WebClient jokeWebClient(@Autowired AppProperties props) {
+        return WebClient.create(props.getJokeBaseUrl());
     }
 
     @Bean
