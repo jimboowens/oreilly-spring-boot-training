@@ -9,6 +9,7 @@ public class AppProperties {
 
     private String JOKE_BASE_URL;
     private String JOKE_URI;
+    private String JOKE_NAME_REPLACEMENT;
 
     private String GOOGLE_KEY;
     private String GOOGLE_GEOCODE_BASE_URL;
@@ -31,6 +32,14 @@ public class AppProperties {
 
     public void setJokeUri(String JOKE_URI) {
         this.JOKE_URI = JOKE_URI;
+    }
+
+    public String getJokeNameReplacement() {
+        return JOKE_NAME_REPLACEMENT;
+    }
+
+    public void setJokeNameReplacement(String JOKE_NAME_REPLACEMENT) {
+        this.JOKE_NAME_REPLACEMENT = JOKE_NAME_REPLACEMENT;
     }
 
     public String getJokeUrlFull() {
@@ -84,14 +93,14 @@ public class AppProperties {
     @Override
     public String toString() {
         return "AppProperties{" +
-                "JOKE_BASE_URL=" + JOKE_BASE_URL +
+                "JOKE_BASE_URL='" + JOKE_BASE_URL + '\'' +
                 ", JOKE_URI='" + JOKE_URI + '\'' +
+                ", JOKE_NAME_REPLACEMENT='" + JOKE_NAME_REPLACEMENT + '\'' +
                 ", GOOGLE_KEY='" + GOOGLE_KEY + '\'' +
                 ", GOOGLE_GEOCODE_BASE_URL='" + GOOGLE_GEOCODE_BASE_URL + '\'' +
                 ", GOOGLE_GEOCODE_URI='" + GOOGLE_GEOCODE_URI + '\'' +
-                ", JOKE_URI='" + ASTRO_BASE_URL + '\'' +
-                ", JOKE_URI='" + ASTRO_BASE_URL + '\'' +
+                ", ASTRO_BASE_URL='" + ASTRO_BASE_URL + '\'' +
+                ", ASTRO_URI='" + ASTRO_URI + '\'' +
                 '}';
     }
-
 }

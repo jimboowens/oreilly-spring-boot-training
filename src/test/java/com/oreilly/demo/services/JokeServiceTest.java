@@ -6,15 +6,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import reactor.test.StepVerifier;
 
 import java.time.Duration;
-import java.util.logging.Logger;
+//import java.util.logging.Logger;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SuppressWarnings("WeakerAccess")
@@ -22,36 +19,35 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(SpringExtension.class)
 public class JokeServiceTest {
 
-    @Autowired
-    Logger logger;
+//   @Autowired
+//   Logger logger;
 
     @Autowired
     JokeService service;
 
-    AppProperties props;
+    private String replacement;
+
+    @Autowired
+    public JokeServiceTest(AppProperties props){
+        replacement = props.getJokeNameReplacement();
+    }
 
     @Test
     public void getJoke() {
-        String joke = service.getJoke("Jim", "Owens");
-        logger.info("joke: [" + joke + "]");
-        assertTrue(joke.contains("Jim") || joke.contains("Owens"));
+        String joke = service.getJoke(replacement);
+        assertTrue(joke.contains(replacement));
     }
 
     @Test
     public void getJokeAsync() {
-        String joke = service.getJokeAsync("Jim", "Owens").block(Duration.ofSeconds(2));
-        logger.info("jokeAsync: [" + joke + "]");
-        assertTrue(joke.contains("Jim") || joke.contains("Owens"));
+        String joke = service.getJokeAsync(replacement).block(Duration.ofSeconds(2));
+        assertTrue(joke.contains(replacement));
     }
 
     @Test
     public void useStepVerifier() {
-        logger.info(props.toString());
-        StepVerifier.create(service.getJokeAsync("Jim", "Owens"))
-                .assertNext(joke -> {
-                    logger.info("joke: [" + joke + "]");
-                    assertTrue(joke.contains("Jim") || joke.contains("Owens"));
-                })
+        StepVerifier.create(service.getJokeAsync(replacement))
+                .assertNext(joke -> assertTrue(joke.contains(replacement)))
                 .verifyComplete();
     }
 }

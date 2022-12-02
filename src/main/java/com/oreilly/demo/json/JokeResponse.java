@@ -1,30 +1,45 @@
 package com.oreilly.demo.json;
 
+import java.util.List;
+
 public class JokeResponse {
-    private String status;
-    private Value value;
+    
+    private String id;
 
-    public String getStatus() {
-        return status;
+    private List<String> categories;
+
+    private String value;
+
+    public String getId() {
+        return id;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public Value getValue() {
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Value value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
     @Override
     public String toString() {
         return "JokeResponse{" +
-                "status='" + status + '\'' +
-                ", value=" + value +
+                "id='" + id + '\'' +
+                ", categories=" + categories +
+                ", value='" + value + '\'' +
                 '}';
     }
 }

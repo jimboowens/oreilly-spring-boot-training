@@ -12,13 +12,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 import java.util.Objects;
-import java.util.logging.Logger;
+// import java.util.logging.Logger;
 
 @Service
 public class JokeService {
 
-    @Autowired
-    private Logger log;
+    // @Autowired
+    // private Logger log;
 
     private final RestTemplate template;
 
@@ -34,28 +34,26 @@ public class JokeService {
         this.props = props;
     }
 
-    private String getUriForFirstAndLastName(String base, String first, String last) {
-        return String.format(base + "&firstName=%s&lastName=%s", first, last);
+    private String getUriForFirstAndLastName(String base, String name) {
+        return String.format(base + "&name=%s", name);
     }
 
-    public String getJoke(String first, String last) {
-        String url = getUriForFirstAndLastName(props.getJokeUrlFull(), first, last);
+    public String getJoke(String name) {
+        String url = getUriForFirstAndLastName(props.getJokeUrlFull(), name);
         JokeResponse response = template.getForObject(url, JokeResponse.class);
-        String output = "";
         return response != null
-                ? response.getValue().getJoke()
+                ? response.getValue()
                 : "";
     }
 
-    public Mono<String> getJokeAsync(String first, String last) {
-        log.info("props: [" + props + "]");
-        String path = getUriForFirstAndLastName(props.getJokeUri(), first, last);
+    public Mono<String> getJokeAsync(String name) {
+        String path = getUriForFirstAndLastName(props.getJokeUri(), name);
 
         return client.get()
                 .uri(path)
                 .retrieve()
                 .bodyToMono(JokeResponse.class)
-                .map(jokeResponse -> jokeResponse.getValue().getJoke());
+                .map(jokeResponse -> jokeResponse.getValue());
     }
 
 

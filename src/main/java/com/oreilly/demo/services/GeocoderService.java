@@ -23,14 +23,17 @@ public class GeocoderService {
     @Autowired
     Logger log;
 
-    private final AppProperties props;
-
     private final WebClient client;
 
+    private final String geocodeUri;
+
+    private final String googleKey;
+
     @Autowired
-    public GeocoderService(WebClient.Builder builder,AppProperties props) {
+    public GeocoderService(WebClient.Builder builder, AppProperties props) {
         client = builder.baseUrl(props.getGoogleGeocodeBaseUrl()).build();
-        this.props = props;
+        geocodeUri = props.getGoogleGeocodeUri();
+        googleKey = props.getGoogleKey();
     }
 
     public SiteEntity updateSiteLatLng(SiteEntity site) {
@@ -48,11 +51,10 @@ public class GeocoderService {
                 }).collect(Collectors.joining(","));
 
         GeocodingResponse response = client.get()
-                .uri(uriBuilder -> uriBuilder.path(props.getGoogleGeocodeUri())
+                .uri(uriBuilder -> uriBuilder.path(geocodeUri)
                         .queryParam("address", encoded)
-                        .queryParam("key", props.getGoogleKey())
-                        .build()
-                )
+                        .queryParam("key", googleKey)
+                        .build())
                 .retrieve()
                 .bodyToMono(GeocodingResponse.class)
                 .block(Duration.ofSeconds(2));
@@ -73,11 +75,10 @@ public class GeocoderService {
                 })
                 .collect(Collectors.joining(","));
         GeocodingResponse response = client.get()
-                .uri(uriBuilder -> uriBuilder.path(props.getGoogleGeocodeUri())
+                .uri(uriBuilder -> uriBuilder.path(geocodeUri)
                         .queryParam("address", encoded)
-                        .queryParam("key", props.getGoogleKey())
-                        .build()
-                )
+                        .queryParam("key", googleKey)
+                        .build())
                 .retrieve()
                 .bodyToMono(GeocodingResponse.class)
                 .block(Duration.ofSeconds(2));
